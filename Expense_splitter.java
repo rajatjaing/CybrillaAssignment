@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+
 class Expense_splitter{
 	static HashMap<String,ArrayList<Attributes>> hashMap=new HashMap<String,ArrayList<Attributes>>();
 
@@ -10,20 +11,16 @@ class Expense_splitter{
 		float amount;
 		String expenseName;
 		String splitBy;
-		// static float totalExpense;
 
 		Attributes(String paidBy,float amount,String splitBy,String expenseName){
 			this.paidBy=paidBy;
 			this.amount=amount;
 			this.splitBy=splitBy;
-			// this.totalExpense=totalExpense;
+	
 			setPaidBy(paidBy);
 			setSplitBy(splitBy);
 			setExpenseName(expenseName);
 			setAmount(amount);
-			// setTotalExpense(amount);
-
-
 		}
 
 		public void setPaidBy(String paidBy){
@@ -54,14 +51,6 @@ class Expense_splitter{
 			return expenseName;
 		}
 
-		// public void setTotalExpense(float totalExpense){
-		// 	this.totalExpense=totalExpense;
-		// }
-		// public float getTotalExpense(){
-		// 	return totalExpense;
-		// }
-
-
 		
 	}
 
@@ -75,33 +64,31 @@ class Expense_splitter{
 
 		}
 		public static void addExpenses(){
-			Scanner expnsNameObj = new Scanner(System.in);
-    		System.out.println("Enter expense Subject :: ");
-    		String expnsName = expnsNameObj.nextLine();
-
-    		Scanner amountObj = new Scanner(System.in);
-    		System.out.println("Enter Amount :: ");
-    		float amountValue = amountObj.nextFloat();
-
-    		Scanner splitByObj = new Scanner(System.in);
-    		System.out.println("Enter Splitby Type :: ");
-    		String splitByType = splitByObj.nextLine();
-
-    		Scanner paidByObj = new Scanner(System.in);
+			Scanner paidByObj = new Scanner(System.in);
     		System.out.println("Enter Paid by :: ");
     		String paidByName = paidByObj.nextLine();
 
+			if (hashMap.get(paidByName)!=null) {
 
-    		Attributes atrObj=new Attributes(paidByName,amountValue,splitByType,expnsName);
+				Scanner expnsNameObj = new Scanner(System.in);
+    			System.out.println("Enter expense Subject :: ");
+    			String expnsName = expnsNameObj.nextLine();
 
+				Scanner splitByObj = new Scanner(System.in);	
+    			System.out.println("Enter Splitby Type :: ");
+    			String splitByType = splitByObj.nextLine();
 
-    		if (hashMap.get(paidByName)!=null) {
-    			
+    			Scanner amountObj = new Scanner(System.in);
+    			System.out.println("Enter Amount :: ");
+    			float amountValue = amountObj.nextFloat();
+
+    			Attributes atrObj=new Attributes(paidByName,amountValue,splitByType,expnsName);
+
     			ArrayList<Attributes> alist= hashMap.get(paidByName);
     			alist.add(atrObj);
     			hashMap.put(paidByName,alist);
-    		}
-    		else{
+
+    		}else{
     			System.out.printf("\nUser Name %s does not exists try again..!!\n\n",paidByName);
     		}
 
@@ -113,18 +100,13 @@ class Expense_splitter{
 			 for (String parentUser : hashMap.keySet()){
 			 float totalExpense=0.0f;
 			 String splitType;  
-            System.out.println("key: " + parentUser);
+            //System.out.println("key: " + parentUser);
             if (parentUser!=null) {
-            	
-            		
             	
              	ArrayList<Attributes> attrblist =hashMap.get(parentUser);
              	
              	for (Attributes atr :attrblist ) {
              		totalExpense=totalExpense+atr.getAmount();
-             		if (atr.getSplitBy().equals("equals")) {
-             			
-             		}
             	 }
 
             	 float splittedAmount=totalExpense/hashMap.size();
@@ -184,7 +166,6 @@ class Expense_splitter{
 					case 2: obj.addExpenses();
 					break;
 					case 3: obj.splitExpenses();
-					System.out.println(hashMap);
 					break;
 					case 4: isValidState=false;
 					default:System.out.println("Invalid Option !! ....Please Select from option menu.");  
